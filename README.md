@@ -1,4 +1,4 @@
 # sit
 Stock Income Tax Calculator
 
-Calculadora de Imposto de Renda sobre operações com ações do mercado financeiro.
+Calculadora de Imposto de Renda em operações de ações do mercado financeiro.
