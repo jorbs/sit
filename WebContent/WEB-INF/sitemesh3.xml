@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+
+<sitemesh>
+  <mapping path="/*" decorator="/WEB-INF//view/jsp/layout/publicLayout.jsp"/>
+</sitemesh>

@@ -1,0 +1,4 @@
+.DS_Store
+WebContent/WEB-INF/config/local/
+target/
+*.class
