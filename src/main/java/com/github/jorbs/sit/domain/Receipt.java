@@ -72,6 +72,19 @@ public class Receipt {
 	@Column(name = "created_at")
 	@CreationTimestamp
 	private Timestamp createdAt;
+	
+	public Receipt() {
+		buyAmount = BigDecimal.ZERO;
+		sellAmount = BigDecimal.ZERO;
+		liquidationTax = BigDecimal.ZERO;
+		registryTax = BigDecimal.ZERO;
+		emoluments = BigDecimal.ZERO;
+		brokerage = BigDecimal.ZERO;
+		iss = BigDecimal.ZERO;
+		irrf = BigDecimal.ZERO;
+		others = BigDecimal.ZERO;
+		taxTotal = BigDecimal.ZERO;
+	}
 
 	public Integer getId() {
 		return id;
@@ -216,8 +229,10 @@ public class Receipt {
 		ret += "Issued at: " + issuedAt.toString() + "\n";
 		ret += "\n[Orders]\n";
 
-		for (Order order : orders) {
-			ret += order.toString() + "\n";
+		if (orders != null) {
+			for (Order order : orders) {
+				ret += order.toString() + "\n";
+			}
 		}
 
 		ret += "Sell amount: " + sellAmount + "\n";

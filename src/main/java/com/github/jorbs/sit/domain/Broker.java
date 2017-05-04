@@ -64,8 +64,8 @@ public abstract class Broker {
 			return new RicoBroker(receiptLines);
 		}
 
-		if (receiptLines[0].contains("Series 2 Web")) {
-			// return new CaixaBroker(receiptLines);
+		if (receiptLines[0].contains("NOTAS DE CORRETAGEM")) {
+			return new CaixaBroker(receiptLines);
 		}
 
 		throw new Exception("No suitable broker has been found.");
@@ -74,4 +74,12 @@ public abstract class Broker {
 	public abstract Receipt readReceipt() throws Exception;
 
 	protected abstract void readOrders(Receipt receipt) throws Exception;
+	
+	protected String normalizePrice(String price) {
+		if (price != null) {
+			return price.replace(".", "").replace(",", ".");
+		}
+		
+		return null;
+	}
 }
