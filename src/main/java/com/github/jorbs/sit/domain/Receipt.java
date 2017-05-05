@@ -19,7 +19,7 @@ import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table
+@Table(name = "receipts")
 public class Receipt {
 
 	@Id
