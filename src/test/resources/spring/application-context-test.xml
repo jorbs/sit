@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.1.xsd">
+
+	<context:annotation-config />	
+	<context:component-scan base-package="com.github.jorbs.sit" />
+	<mvc:annotation-driven />
+	
+	<jdbc:embedded-database id="dataSource" type="HSQL">
+		<jdbc:script location="classpath:sql/test-schema.sql"/>
+		<jdbc:script location="classpath:sql/test-data.sql"/>
+	</jdbc:embedded-database>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<constructor-arg ref="dataSource" />
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+	
+	<jpa:repositories base-package="com.github.jorbs.sit.repository" />
+	
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	    <property name="packagesToScan" value="com.github.jorbs.sit" />
+	    <property name="dataSource" ref="dataSource" />
+	
+	    <property name="jpaProperties">
+	        <props>
+	            <!-- <prop key="hibernate.show_sql">true</prop> -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+      			<prop key="hibernate.hbm2ddl.auto">update</prop>
+	        </props>
+	    </property>
+	
+	    <property name="persistenceProvider">
+	        <bean class="org.hibernate.jpa.HibernatePersistenceProvider"></bean>
+	    </property>
+	</bean>
+	
+</beans>
