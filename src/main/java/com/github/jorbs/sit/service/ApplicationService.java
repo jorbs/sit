@@ -10,7 +10,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.github.jorbs.sit.domain.Broker;
 import com.github.jorbs.sit.domain.Order;
@@ -24,30 +23,33 @@ public class ApplicationService {
 	@Autowired
 	private ReceiptRepository receiptRepository;
 
-	public void saveReceipt(MultipartFile receiptFile) throws Exception {
+	public void saveReceipt(byte[] receiptFile) throws Exception {
 		PDDocument document = null;
 
 		try {
-			document = PDDocument.load(receiptFile.getBytes());
+			document = PDDocument.load(receiptFile);
 			PDFTextStripper textStripper = new PDFTextStripper();
 
 			textStripper.setStartPage(1);
 			textStripper.setEndPage(document.getNumberOfPages());
 
 			String receiptLines[] = textStripper.getText(document).split("\n");
-			Broker broker = Broker.getBroker(receiptLines);
-			Receipt receipt = broker.readReceipt();
-
-			if (receiptRepository.findByNumber(receipt.getNumber()) != null) {
-				throw new Exception("Nota de corretagem já importada.");
-			}
-
-			receiptRepository.save(receipt);
+			
+			this.importReceipt(receiptLines);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		} finally {
 			IOUtils.closeQuietly(document);
+		}
+	}
+	
+	public void importReceipt(String receiptLines[]) throws Exception  {
+		Broker broker = Broker.getBroker(receiptLines);
+		Receipt receipt = broker.readReceipt();
+
+		if (receiptRepository.findByNumber(receipt.getNumber()) != null) {
+			throw new Exception("Nota de corretagem já importada.");
 		}
 	}
 
