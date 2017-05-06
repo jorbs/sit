@@ -173,11 +173,11 @@ public class Order {
 	}
 
 	public String getStockSymbol() {
-		Pattern pattern = Pattern.compile("(\\w+\\s?)+(PN|ON|UNT)");
+		Pattern pattern = Pattern.compile("(\\w+)\\s+(PN|ON|UNT)");
 		Matcher matcher = pattern.matcher(this.description);
 
 		if (matcher.find()) {
-			return matcher.group();
+			return matcher.group(1);
 		}
 
 		return this.description;
