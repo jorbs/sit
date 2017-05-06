@@ -31,7 +31,7 @@ public class ApplicationServiceTest extends AbstractIntegrationTest {
 	
 	@Test
 	public void testReceiptImport() {
-		String receiptFilepath = "src/test/resources/receipts/04-04-2017.pdf";
+		String receiptFilepath = "src/test/data/receipts/04-04-2017.pdf";
 		InputStream is = null;
 		
 		try {

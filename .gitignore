@@ -2,3 +2,4 @@
 WebContent/WEB-INF/config/local/
 target/
 *.class
+src/test/data/receipts
