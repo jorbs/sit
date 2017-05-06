@@ -1,6 +1,6 @@
 create table brokers (
 	id integer primary key,
-	type varchar(31) not null,
+	type varchar(255) not null,
 	name varchar(255) not null
 );
 

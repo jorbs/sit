@@ -22,7 +22,7 @@ public class XpBroker extends Broker {
 
 	@Override
 	public Receipt readReceipt() throws Exception {
-		Receipt receipt = new Receipt();
+		Receipt receipt = new Receipt(this);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Pattern pattern = Pattern.compile("(\\d+)(\\d{2}/\\d{2}/\\d{4})$");
 		Matcher matcher = pattern.matcher(receiptLines[11]);

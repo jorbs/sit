@@ -40,7 +40,7 @@ public class ApplicationController {
 		for (int i = 0; i < receiptFiles.length; i++) {
 			try {
 				byte receiptFile[] = receiptFiles[i].getBytes();
-				applicationService.saveReceipt(receiptFile);
+				applicationService.importReceipt(receiptFile, true);
 			} catch (Exception e) {
 				errors.add(receiptFiles[i].getName());
 			}

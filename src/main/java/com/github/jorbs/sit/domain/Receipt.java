@@ -73,7 +73,8 @@ public class Receipt {
 	@CreationTimestamp
 	private Timestamp createdAt;
 	
-	public Receipt() {
+	public Receipt(Broker broker) {
+		this.broker = broker;
 		buyAmount = BigDecimal.ZERO;
 		sellAmount = BigDecimal.ZERO;
 		liquidationTax = BigDecimal.ZERO;

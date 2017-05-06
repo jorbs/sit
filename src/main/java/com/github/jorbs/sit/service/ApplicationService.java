@@ -23,7 +23,7 @@ public class ApplicationService {
 	@Autowired
 	private ReceiptRepository receiptRepository;
 
-	public void saveReceipt(byte[] receiptFile) throws Exception {
+	public Receipt importReceipt(byte[] receiptFile, boolean persist) throws Exception {
 		PDDocument document = null;
 
 		try {
@@ -34,8 +34,18 @@ public class ApplicationService {
 			textStripper.setEndPage(document.getNumberOfPages());
 
 			String receiptLines[] = textStripper.getText(document).split("\n");
+			Broker broker = Broker.getBroker(receiptLines);
+			Receipt receipt = broker.readReceipt();
+
+			if (persist) {
+				if (receiptRepository.findByNumber(receipt.getNumber()) != null) {
+					throw new Exception("Nota de corretagem já importada.");
+				}
+				
+				receiptRepository.save(receipt);
+			}
 			
-			this.importReceipt(receiptLines);
+			return receipt;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -44,15 +54,6 @@ public class ApplicationService {
 		}
 	}
 	
-	public void importReceipt(String receiptLines[]) throws Exception  {
-		Broker broker = Broker.getBroker(receiptLines);
-		Receipt receipt = broker.readReceipt();
-
-		if (receiptRepository.findByNumber(receipt.getNumber()) != null) {
-			throw new Exception("Nota de corretagem já importada.");
-		}
-	}
-
 	public Set<Position> calculateStockPosition(String stockSymbol) {
 		List<Receipt> receipts = (List<Receipt>) receiptRepository.findAll();
 		Set<Position> buyPositions = new HashSet<>();

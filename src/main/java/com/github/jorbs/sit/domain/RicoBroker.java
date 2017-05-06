@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.persistence.DiscriminatorValue;
+
+@DiscriminatorValue("Rico")
 public class RicoBroker extends Broker {
 
 	public RicoBroker(String[] receiptLines) {
@@ -17,7 +20,7 @@ public class RicoBroker extends Broker {
 
 	@Override
 	public Receipt readReceipt() throws Exception {
-		Receipt receipt = new Receipt();
+		Receipt receipt = new Receipt(this);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Pattern pattern = Pattern.compile("(\\d+)$");
 		Matcher matcher = pattern.matcher(receiptLines[1]);

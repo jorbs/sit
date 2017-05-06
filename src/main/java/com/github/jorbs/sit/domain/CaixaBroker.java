@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.persistence.DiscriminatorValue;
+
+@DiscriminatorValue("Caixa")
 public class CaixaBroker extends Broker {
 
 	public CaixaBroker(String[] receiptLines) {
@@ -16,7 +19,7 @@ public class CaixaBroker extends Broker {
 
 	@Override
 	public Receipt readReceipt() throws Exception {
-		Receipt receipt = new Receipt();
+		Receipt receipt = new Receipt(this);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Pattern pattern = Pattern.compile("(\\d{2}/\\d{2}/\\d{4})$");
 		Matcher matcher = pattern.matcher(receiptLines[2]);
@@ -53,14 +56,6 @@ public class CaixaBroker extends Broker {
 			throw new Exception("Unable to read total buy amount");
 		}
 		
-		matcher = pattern.matcher(normalizePrice(receiptLines[7]));
-		
-		if (matcher.find()) {
-			receipt.setBuyAmount(new BigDecimal(matcher.group(1)));
-		} else {
-			throw new Exception("Unable to read total buy amount");
-		}
-
 		matcher = pattern.matcher(normalizePrice(receiptLines[34]));
 		
 		if (matcher.find()) {
