@@ -9,13 +9,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
+@Entity
 @DiscriminatorValue("Rico")
 public class RicoBroker extends Broker {
 
+	public RicoBroker() {}
+	
 	public RicoBroker(String[] receiptLines) {
 		super(receiptLines);
-		this.name = "Rico";
 	}
 
 	@Override

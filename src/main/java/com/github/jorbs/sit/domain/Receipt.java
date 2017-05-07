@@ -27,6 +27,7 @@ public class Receipt {
 	private Integer id;
 
 	@ManyToOne
+	@Cascade(CascadeType.PERSIST)
 	private Broker broker;
 
 	@Column
@@ -73,18 +74,22 @@ public class Receipt {
 	@CreationTimestamp
 	private Timestamp createdAt;
 	
+	public Receipt() {
+		this(null);
+	}
+	
 	public Receipt(Broker broker) {
 		this.broker = broker;
-		buyAmount = BigDecimal.ZERO;
-		sellAmount = BigDecimal.ZERO;
-		liquidationTax = BigDecimal.ZERO;
-		registryTax = BigDecimal.ZERO;
-		emoluments = BigDecimal.ZERO;
-		brokerage = BigDecimal.ZERO;
-		iss = BigDecimal.ZERO;
-		irrf = BigDecimal.ZERO;
-		others = BigDecimal.ZERO;
-		taxTotal = BigDecimal.ZERO;
+		buyAmount = BigDecimal.ZERO.setScale(2);
+		sellAmount = BigDecimal.ZERO.setScale(2);
+		liquidationTax = BigDecimal.ZERO.setScale(2);
+		registryTax = BigDecimal.ZERO.setScale(2);
+		emoluments = BigDecimal.ZERO.setScale(2);
+		brokerage = BigDecimal.ZERO.setScale(2);
+		iss = BigDecimal.ZERO.setScale(2);
+		irrf = BigDecimal.ZERO.setScale(2);
+		others = BigDecimal.ZERO.setScale(2);
+		taxTotal = BigDecimal.ZERO.setScale(2);
 	}
 
 	public Integer getId() {

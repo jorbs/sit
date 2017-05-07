@@ -1,6 +1,5 @@
 package com.github.jorbs.sit.domain;
 
-import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -21,11 +20,10 @@ public abstract class Broker {
 	@GeneratedValue
 	protected Integer id;
 
-	@Column
-	protected String name;
-
 	@Transient
 	protected String[] receiptLines;
+	
+	public Broker() {}
 
 	public Broker(String[] receiptLines) {
 		this.receiptLines = receiptLines;
@@ -41,14 +39,6 @@ public abstract class Broker {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public static Broker getBroker(String[] receiptLines) throws Exception {

@@ -8,13 +8,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
+@Entity
 @DiscriminatorValue("Caixa")
 public class CaixaBroker extends Broker {
 
+	public CaixaBroker() {}
+	
 	public CaixaBroker(String[] receiptLines) {
 		super(receiptLines);
-		this.name = "Caixa Econômica Federal";
 	}
 
 	@Override

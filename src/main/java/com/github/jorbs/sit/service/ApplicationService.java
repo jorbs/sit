@@ -47,7 +47,10 @@ public class ApplicationService {
 			
 			return receipt;
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (document != null) {
+				document.close();
+			}
+			
 			throw e;
 		} finally {
 			IOUtils.closeQuietly(document);

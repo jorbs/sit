@@ -15,9 +15,10 @@ import javax.persistence.Entity;
 @DiscriminatorValue("XP")
 public class XpBroker extends Broker {
 
+	public XpBroker() {}
+	
 	public XpBroker(String[] receiptLines) {
 		super(receiptLines);
-		this.name = "XP";
 	}
 
 	@Override
